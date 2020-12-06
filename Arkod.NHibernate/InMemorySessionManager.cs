@@ -18,7 +18,7 @@ namespace Arkod.NHibernate
         private static readonly List<DbConnection> ConnectionPersistence = new List<DbConnection>();
         private static readonly Dictionary<Assembly, ISessionFactory> SessionFactoryCache = new Dictionary<Assembly, ISessionFactory>();
 
-        private static readonly Synchronizer<Assembly> assemblySynchronizer = new Synchronizer<Assembly>();
+        private static readonly Synchronizer<string> assemblySynchronizer = new Synchronizer<string>();
 
         /// <summary>
         /// Build a configuration & session factory by a given assembly.
@@ -51,7 +51,7 @@ namespace Arkod.NHibernate
         {
             if (!SessionFactoryCache.ContainsKey(assembly))
             {
-                lock (assemblySynchronizer[assembly])
+                lock (assemblySynchronizer[assembly.FullName])
                 {
                     if (!SessionFactoryCache.ContainsKey(assembly))
                     {

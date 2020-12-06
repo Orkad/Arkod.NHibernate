@@ -8,8 +8,6 @@ using System.Reflection;
 using Models.Testing;
 using System.Linq;
 
-[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
-
 namespace Arkod.NHibernate.Tests
 {
     [TestClass]
@@ -63,21 +61,6 @@ namespace Arkod.NHibernate.Tests
             {
                 var posts = session.Query<Post>().ToList();
                 Check.That(posts).IsEmpty();
-            }
-        }
-
-        [TestMethod]
-        public void SessionTransactionScope()
-        {
-            var sessionManager = new InMemorySessionManager();
-            using (var session = sessionManager.OpenSession(TestingAssembly))
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    var post = new Post { Title = "Un titre", Author = "Moi", Content = "Blablabla" };
-                    session.Save(post);
-                    transaction.Rollback();
-                }
             }
         }
     }
