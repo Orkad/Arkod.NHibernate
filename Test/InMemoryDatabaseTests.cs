@@ -35,6 +35,7 @@ namespace Arkod.NHibernate.Tests
         [TestCleanup]
         public void TestCleanup()
         {
+            Session.Flush();
             Transaction.Rollback();
             Transaction.Dispose();
             Transaction = null;
