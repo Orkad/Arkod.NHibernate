@@ -19,6 +19,14 @@ namespace Arkod.NHibernate.Tests
             Check.That(Session.Query<Post>().Count()).IsEqualTo(1);
             Check.That(Session.Query<Post>().Single().Title).IsEqualTo("InMemoryDatabaseTestsSample2");
             Check.That(Session.Query<Post>().Single().Content).IsEqualTo("DoSomething1");
+            for (int i = 0; i < 100; i++)
+            {
+                var comment = new Comment { Post = post, Title = "Comment " + i + 1, Author = "Someone", Content = "Blablabla" };
+                post.Comments.Add(comment);
+                Session.Save(comment);
+            }
+            post = Session.Query<Post>().Single();
+            Check.That(post.Comments).HasSize(100);
         }
 
         [TestMethod]
@@ -29,6 +37,14 @@ namespace Arkod.NHibernate.Tests
             Check.That(Session.Query<Post>().Count()).IsEqualTo(1);
             Check.That(Session.Query<Post>().Single().Title).IsEqualTo("InMemoryDatabaseTestsSample2");
             Check.That(Session.Query<Post>().Single().Content).IsEqualTo("DoSomething2");
+            for (int i = 0; i < 100; i++)
+            {
+                var comment = new Comment { Post = post, Title = "Comment " + i + 1, Author = "Someone", Content = "Blablabla" };
+                post.Comments.Add(comment);
+                Session.Save(comment);
+            }
+            post = Session.Query<Post>().Single();
+            Check.That(post.Comments).HasSize(100);
         }
 
         [TestMethod]
@@ -39,6 +55,14 @@ namespace Arkod.NHibernate.Tests
             Check.That(Session.Query<Post>().Count()).IsEqualTo(1);
             Check.That(Session.Query<Post>().Single().Title).IsEqualTo("InMemoryDatabaseTestsSample2");
             Check.That(Session.Query<Post>().Single().Content).IsEqualTo("DoSomething3");
+            for (int i = 0; i < 100; i++)
+            {
+                var comment = new Comment { Post = post, Title = "Comment " + i + 1, Author = "Someone", Content = "Blablabla" };
+                post.Comments.Add(comment);
+                Session.Save(comment);
+            }
+            post = Session.Query<Post>().Single();
+            Check.That(post.Comments).HasSize(100);
         }
     }
 }

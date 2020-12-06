@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace Models.Testing
         public virtual string Title { get; set; }
         public virtual string Content { get; set; }
         public virtual string Author { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ISet<Comment> Comments { get; set; } = new HashSet<Comment>();
     }
 
     public class PostMap : ClassMap<Post>
@@ -22,7 +23,7 @@ namespace Models.Testing
             Map(_ => _.Title, "TITLE");
             Map(_ => _.Content, "CONTENT");
             Map(_ => _.Author, "AUTHOR");
-            HasMany(_ => _.Comments).KeyColumn("POST_ID");
+            HasMany(_ => _.Comments).KeyColumn("POST_ID").Inverse().AsSet();
         }
     }
 }
